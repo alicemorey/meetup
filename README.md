@@ -1,10 +1,10 @@
-Meet Up App Project
+**Bold text** Meet Up App Project
 
 The objective of this project is to build a serverless, progressive web application (PWA) with React using a test-driven development (TDD) technique. 
 The application uses the Google Calendar API to fetch upcoming events.
 
 
-TDD // User story formats
+**Bold text** TDD // User story formats
 Feature 2: Show/hide event details
 
 As a user, 
@@ -36,7 +36,7 @@ I should be able to see the events in visible charts
 So I can see how many events are coming up in cities I am interested to visit
 
 
-BDD// Writing test scenarios using ‘Given-When-Then’
+**Bold text** BDD// Writing test scenarios using ‘Given-When-Then’
 
 Feature 2: Show/Hide event details 
 Scenario 1:An event element is collapsed by default.
