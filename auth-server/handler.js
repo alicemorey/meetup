@@ -15,11 +15,9 @@ const oAuth2Client = new google.auth.OAuth2(
 
 module.exports.getAuthURL = async () => {
   try {
-    // Log environment variables for debugging (remove in production)
     console.log('CLIENT_ID:', CLIENT_ID);
     console.log('CLIENT_SECRET:', CLIENT_SECRET);
     console.log('Redirect URI:', redirect_uris[0]);
-
     const authUrl = oAuth2Client.generateAuthUrl({
       access_type: "offline",
       scope: SCOPES,
@@ -48,4 +46,34 @@ module.exports.getAuthURL = async () => {
       }),
     };
   }
+};
+  
+  module.exports.getAccessToken = async (event) => {
+      const code = decodeURIComponent(`${event.pathParameters.code}`);
+      return new Promise((resolve, reject) => {
+      oAuth2Client.getToken(code, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+      return resolve(response);
+    });
+  })
+    .then((results) => {
+    
+      return {
+        statusCode: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
+        },
+        body: JSON.stringify(results),
+      };
+    })
+    .catch((error) => {
+      // Handle error
+      return {
+        statusCode: 500,
+        body: JSON.stringify(error),
+      };
+    });
 };
