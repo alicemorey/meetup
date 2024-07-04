@@ -1,10 +1,18 @@
-# "org" ensures this Service is used with the correct Serverless Framework Access Key.
-org: alicemmorey
-# "service" is the name of this project. This will also be added to your AWS resource names.
 service: auth-server
 
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   region: eu-central-1
-  timeout: 30 # optional, in seconds, default is 6
+  timeout: 30 # optional, in seconds, default is 6npm 
+
+functions:
+  getAuthURL:
+    handler: handler.getAuthURL
+    events:
+      - http:
+          path: get-auth-url
+          method: get
+
+plugins:
+  - serverless-offline

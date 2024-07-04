@@ -15,11 +15,7 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 
 module.exports.getAuthURL = async () => {
-  /**
-   *
-   * Scopes array is passed to the `scope` option. 
-   *
-   */
+try {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: "offline",
     scope: SCOPES,
@@ -35,4 +31,16 @@ module.exports.getAuthURL = async () => {
       authUrl,
     }),
   };
+} catch (error){
+  console.error ('error generating auth URL:', error);
+return {
+  staturCOde:500,
+  headers:{'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
+      body: JSON.stringify({
+        error: 'Failed to generate auth URL',
+      }),
+};
+}
 };
