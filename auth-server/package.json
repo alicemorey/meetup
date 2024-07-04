@@ -10,5 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "googleapis": "^110.0.0"
+  },
+  "devDependencies": {
+    "serverless-offline": "^13.6.0"
   }
 }
