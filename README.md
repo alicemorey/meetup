@@ -7,6 +7,11 @@ The application uses the Google Calendar API to fetch upcoming events.
 Filter events by city, show and hide event details, specify number of events, use the App when offline, add an App shortcut to the home screen,
 display charts visualising Event details. 
 
+**Using Serverless Functions in my Meet App**
+
+In my Meet app, I use serverless functions to manage user authentication and event management efficiently. For example, when a user logs in, a serverless function validates their credentials and generates a session token. Similarly, when users create or join events, serverless functions handle the backend logic to ensure seamless processing and scalability. This approach allows me to focus on developing new features while leveraging the scalability and cost-efficiency of serverless technology.
+
+
 **Technical Requirements:**
 - The app must be a Reactapplication.
 - The app must be built using the TDD technique.
