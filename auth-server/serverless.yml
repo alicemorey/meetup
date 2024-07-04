@@ -5,12 +5,6 @@ service: auth-server
 
 provider:
   name: aws
-  runtime: nodejs20.x
-
-functions:
-  hello:
-    handler: handler.hello
-    events:
-      - httpApi:
-          path: /
-          method: get
+  runtime: nodejs12.x
+  region: eu-central-1
+  timeout: 30 # optional, in seconds, default is 6
