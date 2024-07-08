@@ -4,7 +4,7 @@ const { google } = require("googleapis");
 const calendar = google.calendar("v3");
 const SCOPES = ["https://www.googleapis.com/auth/calendar.events.readonly"];
 const { CLIENT_SECRET, CLIENT_ID, CALENDAR_ID } = process.env;
-const redirect_uris = ["https://alicemorey.github.io/meetup/"];
+const redirect_uris = ["https://github.com/alicemorey/meetup"];
 
 
 const oAuth2Client = new google.auth.OAuth2(
