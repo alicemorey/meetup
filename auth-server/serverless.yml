@@ -1,7 +1,7 @@
 service: auth-server
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs20.x
   region: eu-central-1
   timeout: 30 
   environment:
