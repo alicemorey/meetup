@@ -1,0 +1,17 @@
+service: auth-server
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: eu-central-1
+  timeout: 30 
+  environment:
+    CLIENT_ID: ${file(config.json):CLIENT_ID}
+    CLIENT_SECRET: ${file(config.json):CLIENT_SECRET}
+    CALENDAR_ID: ${file(config.json):CALENDAR_ID}
+functions:
+  getAuthURL:
+    handler: handler.getAuthURL
+    events:
+      - http:
+          path: auth-url
+          method: get
