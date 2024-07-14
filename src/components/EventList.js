@@ -1,10 +1,22 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import Event from './Event';
-export const EventList = ({events}) => {
-    return (
-      <ul id="event-list">
-        {events? events.map(event=> <Event event={event.id}/>): null}
-      </ul>
-    );
-  }
-  
-  export default EventList;
+
+const EventList = ({ events = [] }) => {
+  return (
+    <ul id="event-list" role="list">
+      {events.map(event => (
+        <li key={event.id} role="listitem">
+          <Event event={event} />
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+EventList.propTypes = {
+  events: PropTypes.array,
+};
+
+export default EventList;
+
