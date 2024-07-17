@@ -1,22 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Event from './Event';
 
 const EventList = ({ events = [] }) => {
   return (
     <ul id="event-list" role="list">
-      {events.map(event => (
+      {events.map((event) => (
         <li key={event.id} role="listitem">
-          <Event event={event} />
+         <p>Event ID {event.id}</p>
+         <p>Event DateTime: {event.dateTime}</p>
         </li>
       ))}
     </ul>
   );
 };
-
-EventList.propTypes = {
-  events: PropTypes.array,
-};
-
 export default EventList;
 
