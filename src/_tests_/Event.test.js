@@ -55,7 +55,9 @@ describe('<Event /> component', () => {
     test("renders event start time", () => {
     const {getByText} = render(<Event event={mockEvent} />);
     const formattedDate = new Date(mockEvent.start.dateTime).toLocaleString();
-    expect(getByText({formattedDate})).toBeInTheDocument();
+    expect(getByText((content, element) => {
+      return element.tagName.toLowerCase() === 'p' && content.includes(formattedDate);
+    })).toBeInTheDocument();
   });
 
     // Test event location
