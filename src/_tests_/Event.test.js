@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, fireEvent} from '@testing-library/react';
 import Event from '../components/Event';
-import allEvents from "../mock-data";
 
 // Mock event data
 const mockEvent = {
@@ -53,10 +52,10 @@ describe('<Event /> component', () => {
   });
 
     // Test event start time
-    test("renders event title", () => {
+    test("renders event start time", () => {
     const {getByText} = render(<Event event={mockEvent} />);
     const formattedDate = new Date(mockEvent.start.dateTime).toLocaleString();
-    expect(getByText(formattedDate)).toBeInTheDocument();
+    expect(getByText({formattedDate})).toBeInTheDocument();
   });
 
     // Test event location

@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const CitySearch = ({ allLocations}) => {
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -31,7 +30,8 @@ const CitySearch = ({ allLocations}) => {
             onFocus={()=> setShowSuggestions(true)}
             onChange={handleInputChanged}
             />
-            {showSuggestions? <ul className="suggestions">
+            {showSuggestions? 
+            <ul className="suggestions">
               {suggestions.map((suggestion)=>{
                 return <li onClick={handleItemClicked} key={suggestion}>{suggestion}</li>
               })}
