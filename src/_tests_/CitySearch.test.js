@@ -53,11 +53,16 @@ describe('<CitySearch /> component', () => {
   
   test('renders the suggestion text in the textbox upon clicking on the suggestion', async () => {
     const { queryByRole, queryAllByRole } = await setupCitySearch();
+    CitySearchComponent.rerender(<CitySearch
+      allLocations={allLocations}
+      setCurrentCity={() => { }}
+    />);
+
     const cityTextBox = queryByRole('textbox');
     await user.type(cityTextBox, "Berlin, Germany");
-    const suggestionListItems = queryAllByRole('listitem');
-    await user.click(suggestionListItems[0]);
-    expect(cityTextBox).toHaveValue(suggestionListItems[0].textContent);
+    const BerlinGermanySuggestion = CitySearchComponent.queryAllByRole('listitem')[0];
+    await user.click(BerlinGermanySuggestion);
+    expect(cityTextBox).toHaveValue(BerlinGermanySuggestion.textContent);
   });
 
   test('renders the suggestion text in the textbox upon pressing the Enter key', async () => {
