@@ -1,5 +1,4 @@
 import mockData from './mock-data';
-import { checkToken, getToken } from './api';
 
 export const extractLocations = (events) => {
     const extractedLocations = events.map((event) => event.location);
