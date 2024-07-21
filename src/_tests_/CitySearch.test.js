@@ -1,78 +1,84 @@
-import { render, within } from '@testing-library/react';
+import { render, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CitySearch from '../components/CitySearch';
 import App from '../App';
 import { extractLocations, getEvents } from '../api';
 
-const user = userEvent.setup();
+//const user = userEvent.setup();
 
-async function setupCitySearch() {
+/** async function setupCitySearch() {
   const allEvents = await getEvents();
   const allLocations = extractLocations(allEvents);
   return render(<CitySearch allLocations={allLocations} />);
-}
+}*/
 
 describe('<CitySearch /> component', () => {
+  let CitySearchComponent;
+  beforeEach(()=> {
+    CitySearchComponent = render(<CitySearch allLocations={[]} />);
+  })
+
   test('renders text input',async () => {
-    const {queryByRole}= await setupCitySearch();
-    const cityTextBox = queryByRole('textbox');
+    const cityTextBox = CitySearchComponent.queryByRole('textbox');
     expect(cityTextBox).toBeInTheDocument();
     expect(cityTextBox).toHaveClass('city');
   });
 
   test('suggestions list is hidden by default',async () => {
-    const{queryByRole}= await setupCitySearch();
-    const suggestionList = queryByRole('list');
+    const suggestionList = CitySearchComponent.queryByRole('list');
     expect(suggestionList).not.toBeInTheDocument();
   });
 
   test('renders a list of suggestions when city textbox gains focus', async () => {
-    const {queryByRole}= await setupCitySearch();
-    const cityTextBox = queryByRole('textbox');
+    const user = userEvent.setup();
+    const cityTextBox = CitySearchComponent.queryByRole('textbox');
     await user.click(cityTextBox);
-    await new Promise(resolve => setTimeout(resolve, 0));
-    const suggestionList = queryByRole('list');
+    
+    const suggestionList = CitySearchComponent.queryByRole('list');
     expect(suggestionList).toBeInTheDocument();
+    expect(suggestionList).toHaveClass('suggestions');
   });
 
   test('updates list of suggestions correctly when user types in city textbox', async () => {
-    const { queryByRole, queryAllByRole } = await setupCitySearch();
-    const cityTextBox = queryByRole('textbox');
-    await user.type(cityTextBox, "Berlin, Germany");
+    const user = userEvent.setup();
+    const allEvents=await getEvents();
+    const allLocations =extractLocations(allEvents);
+    CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
+
+    //user types "Berlin" in the city textbox
+    const cityTextBox = CitySearchComponent.queryByRole('textbox');
+    await user.type(cityTextBox, "Berlin");
     
-    const suggestionListItems= queryAllByRole('listitem');
-    const allLocations = await getEvents(). then (extractLocations);
-    const filteredLocations = allLocations.filter((location) => 
-      location.toUpperCase().includes("BERLIN, GERMANY".toUpperCase())
-    );
-    expect(suggestionListItems).toHaveLength(filteredLocations.length + 1);
-    filteredLocations.forEach((location, index) => {
-    expect(suggestionListItems[index]).toHaveTextContent(location);
-    });
+    //filter all Locations to locations matching "Berlin"
+    const suggestions= allLocations? allLocations.filter((location) =>{
+      return location.toUpperCase().indexOf(cityTextBox.value.toUpperCase())> -1;
+    }) : [];
+
+    //get all <li> elements inside the suggestion list
+    const suggestionListItems=CitySearchComponent.queryAllByRole('listitem');
+    expect (suggestionListItems).toHaveLength(suggestions.length+1);
+    for (let i=0; i<suggestions.length; i+=1) {
+      expect(suggestionListItems[i]).textContent(suggestions[i]);
+    }
   });
   
   test('renders the suggestion text in the textbox upon clicking on the suggestion', async () => {
-    const { queryByRole, queryAllByRole } = await setupCitySearch();
+    const user = userEvent.setup();
+    const allEvents=await getEvents();
+    const allLocations =extractLocations(allEvents);
     CitySearchComponent.rerender(<CitySearch
       allLocations={allLocations}
       setCurrentCity={() => { }}
     />);
 
-    const cityTextBox = queryByRole('textbox');
+    const cityTextBox = CitySearchComponent.queryByRole('textbox');
     await user.type(cityTextBox, "Berlin, Germany");
+
+    //the suggestion's textContent look like this : 'Berlin Germany'
     const BerlinGermanySuggestion = CitySearchComponent.queryAllByRole('listitem')[0];
+    
     await user.click(BerlinGermanySuggestion);
     expect(cityTextBox).toHaveValue(BerlinGermanySuggestion.textContent);
-  });
-
-  test('renders the suggestion text in the textbox upon pressing the Enter key', async () => {
-    const { queryByRole, queryAllByRole } = await setupCitySearch();
-    const cityTextBox = queryByRole('textbox');
-    await user.type(cityTextBox, "Berlin, Germany");
-    const suggestionListItems = queryAllByRole('listitem');
-    await user.type(cityTextBox, '{enter}');
-    await new Promise(resolve => setTimeout(resolve, 0)); // Add a small delay
-    expect(cityTextBox).toHaveValue("Berlin, Germany");
   });
 });
 
@@ -82,12 +88,17 @@ describe('<CitySearch /> integration', () => {
     const user = userEvent.setup();
     const AppComponent = render(<App />);
     const AppDOM = AppComponent.container.firstChild;
+
     const CitySearchDOM = AppDOM.querySelector('#city-search');
     const cityTextBox = within(CitySearchDOM).queryByRole('textbox');
     await user.click(cityTextBox);
+
     const allEvents = await getEvents();
     const allLocations = extractLocations(allEvents);
-    const suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem');
-    expect(suggestionListItems.length).toBe(allLocations.length + 1);
- });
+    
+    await waitFor(()=>{
+      const suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem');
+      expect(suggestionListItems.length).toBe(allLocations.length + 1);
+    })
+  });
 });

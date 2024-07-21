@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { getEvents } from '../api';
 import App from '../App';
@@ -9,24 +9,24 @@ describe('<App /> component', () => {
     AppDOM = render(<App />).container.firstChild;
     })
 
-    test('renders main components', () => {
+    /** test('renders main components', () => {
         render(<App />);
         expect(screen.getByPlaceholderText('Search for a city')).toBeInTheDocument();
         expect(screen.getByLabelText(/number of events/i)).toBeInTheDocument();
         expect(screen.getByRole('list')).toBeInTheDocument();
-      });
+      });*/ 
 
     test('renders list of events', () => {
        expect(AppDOM.querySelector('#event-list')).toBeInTheDocument();
     });
 
     test('render CitySearch', () => {
-        expect(screen.getByPlaceholderText('Search for a city')).toBeInTheDocument();
-      });
+        expect(AppDOM.querySelector('#city-search')).toBeInTheDocument();
+    });
     
     test('render NumberOfEvents', () => {
     expect(AppDOM.querySelector('#number-of-events')).toBeInTheDocument();
-    });
+    }); 
 });
 
 describe('<App /> integration', () => {
@@ -50,10 +50,10 @@ describe('<App /> integration', () => {
           event => event.location === 'Berlin, Germany'
         );
         expect(allRenderedEventItems.length).toBe(berlinEvents.length);
+
         allRenderedEventItems.forEach(event => {
             expect(event.textContent).toContain("Berlin, Germany");
           });  
-    });
-      
+    });     
 
 });

@@ -5,6 +5,10 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
     const [query, setQuery] = useState("");
     const [suggestions, setSuggestions] = useState([]);
 
+    useEffect(() => {
+      setSuggestions(allLocations);
+    }, [`${allLocations}`]);
+
     const handleInputChanged = (event) => {
       const value = event.target.value;
       const filteredLocations = allLocations ? allLocations.filter((location) => {
@@ -12,8 +16,7 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
       }) : [];
       setQuery(value);
       setSuggestions(filteredLocations);
-      setShowSuggestions(true);
-    };
+  };
 
     const handleItemClicked = (event) => {
       const value = event.target.textContent;
@@ -22,9 +25,7 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
       setCurrentCity(value);
     };
  
-    useEffect(() => {
-      setSuggestions(allLocations);
-    }, [JSON.stringify(allLocations)]);
+    
     
     return (
       <div id="city-search">
@@ -33,25 +34,22 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
         className="city"
         placeholder="Search for a city"
         value={query}
-        onFocus={()=> {
-              setSuggestions(allLocations)
-              setShowSuggestions(true);
-            }}
+        onFocus={()=> setShowSuggestions(true)}
             onChange={handleInputChanged}
             />
-            {showSuggestions && (
+            {showSuggestions?
             <ul className="suggestions">
-              {suggestions.map((suggestion)=> (
-              <li onClick={handleItemClicked} key={suggestion}>
-                {suggestion}
-              </li>
-            ))}
+              {suggestions.map((suggestion)=> {
+              return<li onClick={handleItemClicked} key={suggestion}>{suggestion}
+            </li>
+              })}
               <li key='See all cities' onClick={handleItemClicked}>
               <b>See all cities</b>
               </li>
             </ul>
-            )}
+            :null
+          }
         </div>
-    );
+    )
 }
    export default CitySearch;
