@@ -25,6 +25,21 @@ export const extractLocations = (events) => {
     return access_token;
   };
 
+  const removeQuery=()=>{
+    let newurl;
+    if (window.history.pushState && window.location.pathname) {
+      newurl =
+        window.location.protocol +
+        "//" +
+        window.location.host +
+        window.location.pathname;
+      window.history.pushState("", "", newurl);
+    } else {
+      newurl = window.location.protocol + "//" + window.location.host;
+      window.history.pushState("", "", newurl);
+    }
+  };
+
   export const getEvents = async () => {
     if (window.location.href.startsWith('http://localhost')) {
     return mockData;
@@ -32,20 +47,7 @@ export const extractLocations = (events) => {
   const token = await getAccessToken();
 
   if (token) {
-    removeQuery=()=>{let newurl;
-      if (window.history.pushState && window.location.pathname) {
-        newurl =
-          window.location.protocol +
-          "//" +
-          window.location.host +
-          window.location.pathname;
-        window.history.pushState("", "", newurl);
-      } else {
-        newurl = window.location.protocol + "//" + window.location.host;
-        window.history.pushState("", "", newurl);
-      }
-    };
-  }
+    removeQuery();
     const url =  "https://gdquabo2t4.execute-api.eu-central-1.amazonaws.com/dev/api/get-events" + "/" + token;
     const response = await fetch(url);
     const result = await response.json();
@@ -53,6 +55,7 @@ export const extractLocations = (events) => {
       return result.events;
     } else return null; 
   }
+};
 
   export const getAccessToken = async () => {
     const accessToken = localStorage.getItem('access_token');
