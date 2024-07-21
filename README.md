@@ -67,7 +67,7 @@ So I can see how many events are coming up in cities I am interested to visit
 
 **1. Feature 2: Show/Hide event details**
 Scenario 1: An event element is collapsed by default.
-- Given: user has not been able to access the events to see details
+- Given: user has not been able to access the events to see detail
 - When: user is able to click on an event it opens up on the screen 
 - Then: user can find the event
  
