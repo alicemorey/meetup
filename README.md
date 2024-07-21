@@ -71,19 +71,17 @@ Scenario 1: An event element is collapsed by default.
 - When: user is able to click on an event it opens up on the screen 
 - Then: user can find the event
  
-**2. Scenario 2: When a user has access to an event and would like to see the details of the event**
-
+Scenario 2: When a user has access to an event and would like to see the details of the event
 - Given: user hasn’t looked at the details of the event,
 - When: user finds and clicks on the event they are interested in,
 - Then: user is able to see the details, including exact location and description of the event. 
 
-**3. Scenario 3:When a user has access to an event and would like hide details**
-
+Scenario 3:When a user has access to an event and would like hide details
 - Given: user hasn’t hidden event details,
 - When: user would like to hide event details by pressing a button,
 - Then: user is able to press a button to hide details of an event they should be able to see the details of the event and then hide them again. 
 
-**3. Feature 3: Specify Number of Events**
+**2. Feature 3: Specify Number of Events**
 
 Scenario 1: When user hasn’t specified a number, 32 events are shown by default. 
 - Given: user hasn’t found a list of events
@@ -95,7 +93,7 @@ Scenario 2: User can change the number of events displayed.
 - When: user clicks on an amount of events they are would like to appear,
 - Then: a new list of events appear in that amount:
 
-**4. Feature 4: Use the App When Offline**
+**3. Feature 4: Use the App When Offline**
 
 Scenario 1: Show cached data when there’s no internet connection.
 - Given: user hasn’t be able to access the app offline,
@@ -107,14 +105,14 @@ Scenario 2: Show error when user changes search settings (city, number of events
 - When: user then changes the setting on the app to offline,
 - Then: user is able to search whilst offline.
 
-**5. Feature 5: Add an App Shortcut to the Home Screen**
+**4. Feature 5: Add an App Shortcut to the Home Screen**
 
 Scenario 1: User can install the meet app as a shortcut on their device home screen. 
 - Given: user has only been able to access the app through other ways on their device,
 - When: user adds the app to their Home Screen,
 - Then: user can access the app through a shortcut on their device.
 
-**6. Feature 6: Display Charts Visualising Event Details**
+**5. Feature 6: Display Charts Visualising Event Details**
 
 Scenario 1: Show a chart with the number of upcoming events in each city.
 - Given: user can not see the amount of events in each city,

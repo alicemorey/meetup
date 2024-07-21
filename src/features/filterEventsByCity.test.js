@@ -88,5 +88,5 @@ defineFeature(feature, test => {
             const berlinEvents = allEvents.filter(event => event.location === citySearchInput.value)
             expect(EventListItems).toHaveLength(berlinEvents.length);
     });
-    });
+});
 });
