@@ -5,6 +5,8 @@ import App from "../App";
 
 describe("<EventList /> component", () => {
   let EventListComponent;
+  let rerender;
+
   beforeEach(() => {
     EventListComponent = render(<EventList />);
   });
@@ -15,7 +17,7 @@ describe("<EventList /> component", () => {
 
   test("renders correct number of events", async() => {
     const allEvents = await getEvents();
-    EventListComponent = rerender(<EventList events={allEvents} />);
+    render(<EventList events={allEvents} />);
     expect(EventListComponent.getAllByRole("listitem")).toHaveLength(allEvents.length);
   });
 });

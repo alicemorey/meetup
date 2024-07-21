@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import NumberOfEvents from '../components/NumberofEvents';
 
@@ -16,7 +16,7 @@ describe('<NumberOfEvents /> component', () => {
 
   test('default value of the input field is 32', () => {
     const numberTextBox = NumberOfEventsComponent.queryByRole('textbox');
-    expect(numberTextBox).toHaveValue(32);
+    expect(numberTextBox).toHaveValue('32');
   });
 
   test('value of NumberOfEvents component\'s textbox changes when user types in it', async () => {
@@ -25,6 +25,7 @@ describe('<NumberOfEvents /> component', () => {
     await user.type(numberTextBox, "123");
 
     //32 (default) +123
-    expect(numberTextBox).toHaveValue(32123);
+    expect(numberTextBox).toHaveValue('32123');
   });
 });
+
