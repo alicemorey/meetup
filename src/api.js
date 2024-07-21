@@ -1,14 +1,59 @@
 import mockData from './mock-data';
+import { checkToken, getToken } from './api';
 
 export const extractLocations = (events) => {
     const extractedLocations = events.map((event) => event.location);
     const locations = [...new Set(extractedLocations)];
     return locations;
   };
-  
-  export const getEvents = async () => {
-    return mockData;
+
+  const checkToken = async (accessToken) => {
+    const response = await fetch(
+      `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
+    );
+    const result = await response.json();
+    return result;
   };
+
+  const getToken = async (code) => {
+    const encodeCode = encodeURIComponent(code);
+    const response = await fetch(
+      'https://gdquabo2t4.execute-api.eu-central-1.amazonaws.com/dev/api/token' + '/' + encodeCode
+    );
+    const { access_token } = await response.json();
+    access_token && localStorage.setItem("access_token", access_token);
+  
+    return access_token;
+  };
+
+  export const getEvents = async () => {
+    if (window.location.href.startsWith('http://localhost')) {
+    return mockData;
+  }
+  const token = await getAccessToken();
+
+  if (token) {
+    removeQuery=()=>{let newurl;
+      if (window.history.pushState && window.location.pathname) {
+        newurl =
+          window.location.protocol +
+          "//" +
+          window.location.host +
+          window.location.pathname;
+        window.history.pushState("", "", newurl);
+      } else {
+        newurl = window.location.protocol + "//" + window.location.host;
+        window.history.pushState("", "", newurl);
+      }
+    };
+  }
+    const url =  "https://gdquabo2t4.execute-api.eu-central-1.amazonaws.com/dev/api/get-events" + "/" + token;
+    const response = await fetch(url);
+    const result = await response.json();
+    if (result) {
+      return result.events;
+    } else return null; 
+  }
 
   export const getAccessToken = async () => {
     const accessToken = localStorage.getItem('access_token');
@@ -32,3 +77,4 @@ export const extractLocations = (events) => {
 
   };
   
+  export { checkToken, getToken };
