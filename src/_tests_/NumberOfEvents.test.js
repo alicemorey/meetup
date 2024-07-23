@@ -5,7 +5,7 @@ import NumberOfEvents from '../components/NumberofEvents';
 describe('<NumberOfEvents /> component', () => {
   let NumberOfEventsComponent;
   beforeEach(() => {
-    NumberOfEventsComponent = render(<NumberOfEvents updateEventCount={() => {}} />);
+    NumberOfEventsComponent = render(<NumberOfEvents setCurrentNOE={() => {}} />);
   });
 
   test('renders the NumberOfEvents text input', () => {
@@ -21,7 +21,7 @@ describe('<NumberOfEvents /> component', () => {
 
   test('value of NumberOfEvents component\'s textbox changes when user types in it', async () => {
     const numberTextBox = NumberOfEventsComponent.queryByRole('textbox');
-    await userEvent.type(numberTextbox, "{backspace}{backspace}10");
+    await userEvent.type(numberTextBox, "{backspace}{backspace}10");
     expect(numberTextBox.value).toBe('10');
   });
 });
