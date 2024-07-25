@@ -3,6 +3,9 @@
 The objective of this project is to build a serverless, progressive web application (PWA) with React using a test-driven development (TDD) technique. 
 The application uses the Google Calendar API to fetch upcoming events.
 
+**Deploy**
+Application is currently deployed at https://alicemorey.github.io/meetup/
+
 **Your Project Requirements Key Features:** 
 Filter events by city, show and hide event details, specify number of events, use the App when offline, add an App shortcut to the home screen,
 display charts visualising Event details. 
