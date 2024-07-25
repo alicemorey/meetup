@@ -2,7 +2,7 @@
 body {
   font-family: 'Poppins', sans-serif;
   background-color: #f9f9f9;
-  color: #333;
+  color: #2a07f4;
 }
 
 .App {
@@ -108,12 +108,12 @@ input[type="number"]:focus {
   border-radius: 8px;
   outline: none;
   cursor: pointer;
-  border: 2px solid rgb(218, 194, 241);
-  background-color: #ffffff;
-  color: rgb(206, 177, 233);
+  border: 2px solid rgb(24, 4, 233);
+  background-color: #5fdded;
+  color: rgb(6, 90, 235);
   transition: background-color 0.3s, color 0.3s;
 }
 .details {
-  background-color: blueviolet;
-  color: #ffffff;
+  background-color: rgb(240, 236, 244);
+  color: #e80c0c;
 }
