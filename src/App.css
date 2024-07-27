@@ -117,3 +117,11 @@ input[type="number"]:focus {
   background-color: rgb(240, 236, 244);
   color: #e80c0c;
 }
+
+.alerts-container {
+  position: fixed;
+  top: 0px;
+  left: 20px;
+  width: 250px;
+  z-index: 1000;
+}
