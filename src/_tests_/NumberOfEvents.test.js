@@ -4,8 +4,16 @@ import NumberOfEvents from '../components/NumberofEvents';
 
 describe('<NumberOfEvents /> component', () => {
   let NumberOfEventsComponent;
+  const mockSetCurrentNOE = jest.fn();
+  const mockSetErrorText = jest.fn();
+
   beforeEach(() => {
-    NumberOfEventsComponent = render(<NumberOfEvents setCurrentNOE={() => {}} />);
+    NumberOfEventsComponent = render(
+      <NumberOfEvents 
+        setCurrentNOE={mockSetCurrentNOE} 
+        setErrorText={mockSetErrorText}
+      />
+    );
   });
 
   test('renders the NumberOfEvents text input', () => {
@@ -21,7 +29,8 @@ describe('<NumberOfEvents /> component', () => {
 
   test('value of NumberOfEvents component\'s textbox changes when user types in it', async () => {
     const numberTextBox = NumberOfEventsComponent.queryByRole('textbox');
-    await userEvent.type(numberTextBox, "{backspace}{backspace}10");
+    const user=userEvent.setup();
+    await user.type(numberTextBox, "{backspace}{backspace}10");
     expect(numberTextBox.value).toBe('10');
   });
 });

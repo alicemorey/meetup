@@ -1,4 +1,4 @@
-import { render} from '@testing-library/react';
+import { render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';    
 import {getEvents} from '../api';
 import Event from '../components/Event';
@@ -49,52 +49,67 @@ describe('<Event /> component', () => {
   let allEvents;
   beforeEach(async () => {
     allEvents = await getEvents();
-    EventComponent = allEvents.map((event) => <Event event={allEvents[0]} />)
+    EventComponent = render (<Event event={allEvents[0]} />)
   });
 
     test("renders event title", () => {
-      expect(EventComponent.queryByText(allEvents[0].summary)).toBeInTheDocument();
+      expect(screen.getByText(allEvents[0].summary)).toBeInTheDocument();
     });
 
     test("renders event location", () => {
-      expect(EventComponent.queryByText(allEvents[0].location)).toBeInTheDocument();
+      expect(screen.getByText(allEvents[0].location)).toBeInTheDocument();
     });
 
   test("renders event details button with the title (show details)", () => {
-  expect(EventComponent.queryByText('show details')).toBeInTheDocument();
+  expect(screen.getByText('show details')).toBeInTheDocument();
   });
   
   test("event details section hidden by default", () => {
-    expect(EventComponent.container.querySelector('.details')).not.toBeInTheDocument();
+    expect(screen.queryByText((content, element)=>{
+      return element.tagName.toLowerCase() === 'p' &&
+      element.className === 'details';
+    })).not.toBeInTheDocument();
   });
 
-  test("renders event details section when show details button is clicked", () => {
-      expect(EventComponent.container.querySelector('.details')).toBeInTheDocument();
+  test("renders event details section when show details button is clicked", async() => {
+    const user=userEvent.setup();
+    await user.click(screen.getByText('show details'));
+    expect(screen.getByLabelText((content, element)=>{
+      return element.tagName.toLowerCase() === 'p' &&
+      element.className === 'details';
+    })).toBeInTheDocument();
     }); 
 
 
   test("shows details section when hide details button is clicked", async () => {
     const user = userEvent.setup();
-    await user.click(EventComponent.queryByText('show details'));
+    await user.click(screen.queryByText('show details'));
 
-    expect(EventComponent.container.querySelector('.details')).toBeInTheDocument();
-    expect(EventComponent.queryByText('hide details')).toBeInTheDocument();
-    expect(EventComponent.queryByText('show details')).not.toBeInTheDocument();
+    expect(screen.getByText((content, element)=>{
+      return element.tagName.toLowerCase() === 'p' &&
+      element.className ==='details';
+  })).toBeInTheDocument();
+    expect(screen.getByText('hide details')).toBeInTheDocument();
+    expect(screen.queryByText('show details')).not.toBeInTheDocument();
   });
 
   
-  test("hides details section when show details button is clicked", async () => {
+  test("hides details section when hide details button is clicked", async () => {
     const user = userEvent.setup();
 
-    await user.click(EventComponent.queryByText('show details'));
-    expect(EventComponent.container.querySelector('.details')).toBeInTheDocument();
-    expect(EventComponent.queryByText('hide details')).toBeInTheDocument();
-    expect(EventComponent.queryByText('show details')).not.toBeInTheDocument();
+    await user.click(screen.getByText('show details'));
+    expect(screen.getByText((content, element) => {
+      return element.tagName.toLowerCase() === 'p' && element.className === 'details';
+    })).toBeInTheDocument();
+    expect(screen.getByText('hide details')).toBeInTheDocument();
+    expect(screen.queryByText('show details')).not.toBeInTheDocument();
 
-    await user.click(EventComponent.queryByText('hide details'));
-    expect(EventComponent.container.querySelector('.details')).not.toBeInTheDocument();
-    expect(EventComponent.queryByText('hide details')).not.toBeInTheDocument();
-    expect(EventComponent.queryByText('show details')).toBeInTheDocument();
+    await user.click(screen.getByText('hide details'));
+    expect(screen.queryByText((content, element) => {
+      return element.tagName.toLowerCase() === 'p' && element.className === 'details';
+    })).not.toBeInTheDocument();
+    expect(screen.queryByText('hide details')).not.toBeInTheDocument();
+    expect(screen.getByText('show details')).toBeInTheDocument();
   });
 });
       
