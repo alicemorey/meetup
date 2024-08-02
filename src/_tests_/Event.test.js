@@ -74,7 +74,7 @@ describe('<Event /> component', () => {
   test("renders event details section when show details button is clicked", async() => {
     const user=userEvent.setup();
     await user.click(screen.getByText('show details'));
-    expect(screen.getByLabelText((content, element)=>{
+    expect(screen.getByText((content, element)=>{
       return element.tagName.toLowerCase() === 'p' &&
       element.className === 'details';
     })).toBeInTheDocument();
