@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { extractLocations, getEvents } from './api';
 import { InfoAlert } from './components/Alert';
 import { ErrorAlert } from './components/Alert';
+import { WarningAlert } from './components/Alert';
 
 
 import './App.css';
@@ -16,10 +17,14 @@ const App = () => {
   const [currentCity, setCurrentCity] = useState("See all cities");
   const [infoAlert, setInfoAlert] = useState("");
   const [errorText, setErrorText] = useState("");
-
-
+  const [warningText, setWarningText] = useState("");
 
   useEffect(() => {
+    if (navigator.onLine) {
+      // set the warning alert message to an empty string ""
+    } else {
+      // set the warning alert message to a non-empty string
+    }
     fetchData ();
   }, [currentCity, currentNOE]);
 
@@ -36,7 +41,8 @@ const App = () => {
       <div className="App">
       <div className="alerts-container">
       {infoAlert.length ? <InfoAlert text={infoAlert}/> : null}
-      {errorText.length > 0 && <ErrorAlert text={errorText} />} 
+      {errorText.length > 0 && <ErrorAlert text={errorText} />}
+      {warningText.length > 0 && <WarningAlert text={warningText} />} 
       </div>
         <CitySearch 
         allLocations={allLocations} 
@@ -44,8 +50,9 @@ const App = () => {
         setInfoAlert={setInfoAlert} 
         />
         <NumberOfEvents
-          setCurrentNOE ={setCurrentNOE}
+          setCurrentNOE={setCurrentNOE}
           setErrorText={setErrorText}
+          setWarningText={setWarningText}
         />
         <EventList 
         events={events}/>
