@@ -3,8 +3,6 @@
   "name": "Create React App Sample",
   "icons": [
     {
-      "icons": [
-    {
       "src": "favicon.ico",
       "type": "image/x-icon",
       "sizes": "48x48",
@@ -21,16 +19,14 @@
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "maskable"
-    }
-  ],
+    },
+    {
       "src": "meet-app-512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"
     }
   ],
-  
-
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
