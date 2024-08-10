@@ -6,8 +6,7 @@ import { extractLocations, getEvents } from './api';
 import { InfoAlert } from './components/Alert';
 import { ErrorAlert } from './components/Alert';
 import { WarningAlert } from './components/Alert';
-import {CityEventsChart} from './components/CityEventsChart';
-
+import CityEventsChart from './components/CityEventsChart';
 
 import './App.css';
 
