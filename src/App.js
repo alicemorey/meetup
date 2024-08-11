@@ -1,6 +1,7 @@
 import CitySearch from './components/CitySearch';
 import EventList from './components/EventList';
-import NumberOfEvents from './components/NumberofEvents';
+import NumberOfEvents from './components/NumberOfEvents';
+import EventGenresChart from './components/EventGenresChart';
 import CityEventsChart from './components/CityEventsChart';
 import { useEffect, useState } from 'react';
 import { extractLocations, getEvents } from './api';
@@ -59,6 +60,7 @@ const App = () => {
         <CityEventsChart 
           allLocations={allLocations} 
           events={events} />
+        <EventGenresChart events={events}/>
           </div>
         <EventList 
         events={events}/>
