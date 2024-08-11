@@ -18,6 +18,24 @@ const EventGenresChart = ({ events }) => {
         return data;
       };
 
+      const renderCustomizedLabel = ({ cx, cy, midAngle, outerRadius, percent, index }) => {
+        const RADIAN = Math.PI / 180;
+        const radius = outerRadius;
+        const x = cx + radius * Math.cos(-midAngle * RADIAN) * 1.07;
+        const y = cy + radius * Math.sin(-midAngle * RADIAN) * 1.07;
+        return percent ? (
+          <text
+            x={x}
+            y={y}
+            fill="#8884d8"
+            textAnchor={x > cx ? 'start' : 'end'}
+            dominantBaseline="central"
+          >
+            {`${genres[index]} ${(percent * 100).toFixed(0)}%`}
+          </text>
+        ) : null;
+      };
+
       useEffect(() => {
         setData(getData());
       }, [events]);
@@ -30,8 +48,8 @@ const EventGenresChart = ({ events }) => {
          dataKey="value"
          fill="#8884d8"
          labelLine={false}
-         label
-         outerRadius={130}
+         outerRadius={150}
+         label={renderCustomizedLabel}
 >   
   {
     data.map((entry, index) => (
